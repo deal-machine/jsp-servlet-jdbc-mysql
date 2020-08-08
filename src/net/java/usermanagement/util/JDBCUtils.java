@@ -9,7 +9,7 @@ public class JDBCUtils {
 	
 	private static final String jdbcURL = "jdbc:mysql://localhost:3306/user_management";
 	private static final String jdbcUsername = "root";
-	private static final String jdbcPassword = "fpo-5384_E";
+	private static final String jdbcPassword = "";
 
 	public static Connection getConnection() {
 		Connection connection = null;
