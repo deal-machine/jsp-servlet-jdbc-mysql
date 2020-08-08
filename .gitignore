@@ -8,4 +8,5 @@
 *.project
 *.settings
 /lib
+/WebContent/WEB-INF/lib
 
