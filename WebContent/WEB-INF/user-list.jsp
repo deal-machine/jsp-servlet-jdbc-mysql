@@ -36,6 +36,8 @@
 						<a href="edit?id=<c:out value='${user.id}' />">Edit</a>
 						&nbsp;&nbsp;&nbsp;
 						<a href="delete?id=<c:out value='${user.id}' /> ">Delete</a>
+						&nbsp;&nbsp;&nbsp;
+						<a href="view?id=<c:out value='${user.id}' /> ">View</a>
 					</td>
 				</tr>
 				</c:forEach>

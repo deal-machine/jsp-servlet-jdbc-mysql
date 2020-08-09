@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import net.java.usermanagement.model.User;
 import net.java.usermanagement.util.JDBCUtils;
 
@@ -68,7 +69,6 @@ public class UserDao {
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);)
 		
 		{
-			System.out.println(preparedStatement);
 				ResultSet resultSet = preparedStatement.executeQuery();
 				while (resultSet.next()) {
 					int id = resultSet.getInt("id");

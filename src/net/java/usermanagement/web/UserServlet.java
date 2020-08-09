@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import net.java.usermanagement.dao.UserDao;
 import net.java.usermanagement.model.User;
 
@@ -52,6 +54,14 @@ public class UserServlet extends HttpServlet {
 			case "/edit":
 				showEditForm(request, response);
 				break;
+				
+			case "/view":
+				descUser(request, response);
+				break;
+				
+			case "/api":
+				listUserJson(request, response);
+				break;
 
 			default:
 				listUser(request, response);
@@ -69,9 +79,21 @@ public class UserServlet extends HttpServlet {
 
 		users = userDao.selectAllUsers();
 		request.setAttribute("listUser", users);
-
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user-list.jsp");
 		dispatcher.forward(request, response);
+	}
+	
+	private void listUserJson(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		List<User> users = new ArrayList<>();
+		users = userDao.selectAllUsers();		
+		
+		String usersJson = new Gson().toJson(users);
+		
+		response.setContentType("application/json");
+		response.getWriter().print(usersJson);				
 	}
 
 	// display user-form
@@ -97,6 +119,21 @@ public class UserServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user-form.jsp");
 		request.setAttribute("user", existingUser);
 		dispatcher.forward(request, response);
+	}
+	
+	private void descUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		User existingUser = userDao.selectUser(id);
+		
+		String existingUserJson = new Gson().toJson(existingUser);
+		response.setContentType("application/json");
+		response.getWriter().print(existingUserJson);
+		System.out.println(existingUserJson);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/show-user.jsp");
+		request.setAttribute("user", existingUser);
+		dispatcher.forward(request, response);
+		
 	}
 
 	private void updateUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
